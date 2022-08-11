@@ -5,8 +5,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using DevExpress.Data.Filtering;
-using DevExpress.Web.ASPxGridView;
-using DevExpress.Web.ASPxEditors;
+using DevExpress.Web;
+
 
 
 
@@ -16,10 +16,10 @@ public partial class _Default : System.Web.UI.Page {
         List<CriteriaOperator> lst_operator = new List<CriteriaOperator>();
 
         if (!string.IsNullOrEmpty(txtFirstName.Text))
-            lst_operator.Add(new BinaryOperator("FirstName", string.Format("%{0}%", txtFirstName.Text), BinaryOperatorType.Like));
+            lst_operator.Add(new FunctionOperator(FunctionOperatorType.Contains, new OperandProperty("FirstName"), new OperandValue(txtFirstName.Text)));
 
         if (!string.IsNullOrEmpty(txtLastName.Text))
-            lst_operator.Add(new BinaryOperator("LastName", string.Format("%{0}%", txtLastName.Text), BinaryOperatorType.Like));
+            lst_operator.Add(new FunctionOperator(FunctionOperatorType.Contains, new OperandProperty("LastName"), new OperandValue(txtLastName.Text)));
 
         if (deHDFrom.Value != null)
             lst_operator.Add(new BinaryOperator("HireDate", deHDFrom.Date, BinaryOperatorType.GreaterOrEqual));

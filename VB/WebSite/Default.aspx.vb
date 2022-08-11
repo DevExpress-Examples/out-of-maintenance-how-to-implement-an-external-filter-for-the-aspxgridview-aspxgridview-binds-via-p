@@ -1,28 +1,28 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
+﻿Imports System
 Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Web
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
 Imports DevExpress.Data.Filtering
-Imports DevExpress.Web.ASPxGridView
-Imports DevExpress.Web.ASPxEditors
+Imports DevExpress.Web
+
 
 
 
 Partial Public Class _Default
 	Inherits System.Web.UI.Page
+
 	Private Function GetFilterExpression() As String
 		Dim res_str As String = String.Empty
 		Dim lst_operator As New List(Of CriteriaOperator)()
 
 		If Not String.IsNullOrEmpty(txtFirstName.Text) Then
-			lst_operator.Add(New BinaryOperator("FirstName", String.Format("%{0}%", txtFirstName.Text), BinaryOperatorType.Like))
+			lst_operator.Add(New FunctionOperator(FunctionOperatorType.Contains, New OperandProperty("FirstName"), New OperandValue(txtFirstName.Text)))
 		End If
 
 		If Not String.IsNullOrEmpty(txtLastName.Text) Then
-			lst_operator.Add(New BinaryOperator("LastName", String.Format("%{0}%", txtLastName.Text), BinaryOperatorType.Like))
+			lst_operator.Add(New FunctionOperator(FunctionOperatorType.Contains, New OperandProperty("LastName"), New OperandValue(txtLastName.Text)))
 		End If
 
 		If deHDFrom.Value IsNot Nothing Then
